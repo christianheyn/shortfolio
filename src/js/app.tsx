@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
-
 import Store from './store';
 
 import App from './components/App';
@@ -24,3 +23,4 @@ ReactDOM.render(
     ),
     document.getElementById('root')
 );
+

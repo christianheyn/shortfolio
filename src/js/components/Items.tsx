@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Item from './Item';
 import { receiveItemlist } from '../actions';
+import jsonP from '../utils/jsonp';
 
 interface ItemsProps {
     dispatch: Function;
@@ -34,16 +35,12 @@ class Items extends React.Component<ItemsProps, void> {
         if (this.props.itemList.length > 0) {
             return;
         }
+        
+        let url: string = 'https://api.behance.net/v2/users/chrisheyn/projects?client_id=uzo64WUMaI8seQcQWGRQCD1q6GJ6Uqhx';
 
-        window.fetch('./data/items.json')
-            .then((response: Response) => {
-                response
-                    .json()
-                    .then((json: ItemData[]) => {
-                        console.log(3)
-                        this.props.dispatch(receiveItemlist(json));
-                    });
-                });
+        jsonP(url, (data): void => {
+            this.props.dispatch(receiveItemlist(data.projects));
+        });
     }
 
     public render(): JSX.Element {
