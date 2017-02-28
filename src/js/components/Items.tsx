@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Item from './Item';
 import { receiveItemlist } from '../actions';
-import jsonP from '../utils/jsonp';
+import { fetchBehanceApi } from '../utils/jsonp';
+import { BE_API_PROJECTS } from '../const';
+
 
 interface ItemsProps {
     dispatch: Function;
@@ -37,12 +39,20 @@ class Items extends React.Component<ItemsProps, void> {
             return;
         }
         
-        let url: string = 'https://api.behance.net/v2/users/chrisheyn/projects?client_id=uzo64WUMaI8seQcQWGRQCD1q6GJ6Uqhx';
-
-        jsonP(url, (data): void => {
-            console.log(data.projects);
-            this.props.dispatch(receiveItemlist(data.projects));
-        });
+        try {
+            fetchBehanceApi(BE_API_PROJECTS, (data): void => {
+                if (data && data.projects) {
+                    this.props.dispatch(receiveItemlist(data.projects));
+                } else {
+                    throw new Error(
+                        `Behance API result does not not match needed structure. Do you run this code on correct environments with the right permissions?`
+                    );
+                }
+            });
+        } catch(err) {
+            throw new Error('Can not fetch projects from Behance.');
+        }
+        
     }
 
     public render(): JSX.Element {

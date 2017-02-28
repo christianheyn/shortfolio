@@ -1,5 +1,5 @@
 import * as React from 'react';
-import jsonP from '../utils/jsonp';
+import { jsonp } from '../utils/jsonp';
 
 interface ItemProps {
     params: {
