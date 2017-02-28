@@ -13,6 +13,7 @@ interface ItemsProps {
 interface ItemData {
     id: number;
     name: string;
+    covers: Object
 };
 
 interface State {
@@ -39,6 +40,7 @@ class Items extends React.Component<ItemsProps, void> {
         let url: string = 'https://api.behance.net/v2/users/chrisheyn/projects?client_id=uzo64WUMaI8seQcQWGRQCD1q6GJ6Uqhx';
 
         jsonP(url, (data): void => {
+            console.log(data.projects);
             this.props.dispatch(receiveItemlist(data.projects));
         });
     }
@@ -46,7 +48,12 @@ class Items extends React.Component<ItemsProps, void> {
     public render(): JSX.Element {
         const items: JSX.Element[] = this.props.itemList.map(
                 (item: ItemData, i: number) => {
-                    return <Link to={`/items/${item.id}`} key={item.id}>{item.name}<br /></Link>;
+                    return (
+                        <Link to={`/items/${item.id}`} key={item.id}>
+                            <img src={item.covers[404]} />
+                            <h1>{item.name}</h1>
+                            <br />
+                        </Link>);
                 }
             );
 
