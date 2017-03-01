@@ -6,7 +6,7 @@ import Store from './store';
 
 import App from './components/App';
 import Home from './components/Home';
-import Items from './components/Items';
+import ItemList from './components/ItemList';
 import Item from './components/Item';
 
 ReactDOM.render(
@@ -15,7 +15,7 @@ ReactDOM.render(
 	        <Router history={hashHistory}>
 	            <Route path="/" component={App}>
 	            	 <IndexRoute component={Home}/>
-	                <Route path="/items" component={Items}/>
+	                <Route path="/items" component={ItemList}/>
 	                <Route path="/items/:id" component={Item}/>
 	            </Route>
 	        </Router>

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { jsonp } from '../utils/jsonp';
 
 interface ItemProps {
     params: {
@@ -10,15 +9,7 @@ interface ItemProps {
     name: string;
 };
 
-interface ItemStates {
-    items: Object[];
-};
-
-class Item extends React.Component<ItemProps, ItemStates> {
-
-    protected componentWillMount(): void {
-        //this.getData();
-    }
+class Item extends React.Component<ItemProps, {}> {
 
     public render(): JSX.Element {
         return <div>Single Item {this.props.params.name}</div>;

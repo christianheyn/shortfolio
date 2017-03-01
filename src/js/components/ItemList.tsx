@@ -3,36 +3,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Item from './Item';
 import { receiveItemlist } from '../actions';
-import { fetchBehanceApi } from '../utils/jsonp';
-import { BE_API_PROJECTS } from '../const';
+import { BehanceApi } from '../utils/api';
+import { BE_API_GET_PROJECTS } from '../const';
 
+let ItemListComponent;
 
-interface ItemsProps {
-    dispatch: Function;
-    itemList: Object[];
-};
-
-interface ItemData {
-    id: number;
-    name: string;
-    covers: Object
-};
-
-interface State {
-    itemList: Object[] | {};
-};
-
-interface Store {
-    itemList: Object[] | {};
-};
-
-@connect((store:Store):State => {
-    return {
-        itemList: store.itemList
-    };
-})
-
-class Items extends React.Component<ItemsProps, void> {
+class ItemList extends React.Component<ItemsProps, void> {
 
     protected componentWillMount(): void {
         if (this.props.itemList.length > 0) {
@@ -40,7 +16,7 @@ class Items extends React.Component<ItemsProps, void> {
         }
         
         try {
-            fetchBehanceApi(BE_API_PROJECTS, (data): void => {
+            BehanceApi(BE_API_GET_PROJECTS, (data: BehanceProjects): void => {
                 if (data && data.projects) {
                     this.props.dispatch(receiveItemlist(data.projects));
                 } else {
@@ -57,7 +33,7 @@ class Items extends React.Component<ItemsProps, void> {
 
     public render(): JSX.Element {
         const items: JSX.Element[] = this.props.itemList.map(
-                (item: ItemData, i: number) => {
+                (item: BehanceProjectData, i: number) => {
                     return (
                         <Link to={`/items/${item.id}`} key={item.id}>
                             <img src={item.covers[404]} />
@@ -71,4 +47,10 @@ class Items extends React.Component<ItemsProps, void> {
     }
 }
 
-export default Items;
+ItemListComponent = connect((store: Store, props): State => {
+    return {
+        itemList: store.itemList
+    };
+})(ItemList);
+
+export default ItemListComponent;

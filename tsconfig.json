@@ -13,5 +13,8 @@
         "node_modules",
         "typings/browser.d.ts",
         "typings/browser"
+    ],
+    "include": [
+        "typings/window.d.ts"
     ]
 }
