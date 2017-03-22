@@ -21,7 +21,7 @@ class ItemList extends React.Component<ItemsProps, void> {
                     this.props.dispatch(receiveItemlist(data.projects));
                 } else {
                     throw new Error(
-                        `Behance API result does not not match needed structure. Do you run this code on correct environments with the right permissions?`
+                        `Behance API result does not not match needed structure. Do you run this code on correct environment with the right permissions?`
                     );
                 }
             });
